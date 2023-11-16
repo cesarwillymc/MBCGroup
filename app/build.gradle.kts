@@ -3,6 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("com.google.dagger.hilt.android")
     id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
+    id("com.apollographql.apollo3").version("3.7.3")
     kotlin("kapt")
 }
 
@@ -14,6 +15,13 @@ fun getLocalProperty(key: String, defaultValue: String = ""): String =
 // Run jacoco gradle
 // Combination between DSL and gradle
 apply(from = "${rootProject.projectDir}/jacoco.gradle")
+
+apollo {
+    service("service") {
+        packageName.set("com.cesarwillymc")
+    }
+}
+
 android {
     namespace = "com.cesarwillymc.mbcgroup"
     compileSdk = 34
@@ -101,6 +109,9 @@ dependencies {
     implementation("androidx.compose.material3:material3:1.2.0-alpha08")
     implementation("androidx.navigation:navigation-compose:2.7.3")
 
+    //Splash Screen
+    implementation("androidx.core:core-splashscreen:1.0.1")
+
     // Constraint
     implementation("androidx.constraintlayout:constraintlayout-compose:1.0.1")
 
@@ -124,12 +135,14 @@ dependencies {
     // Unit test
     testImplementation("junit:junit:4.13.2")
 
+    // Apollo
+    implementation("com.apollographql.apollo3:apollo-runtime:3.7.3")
+
     // Shared Preference
     implementation("androidx.security:security-crypto:1.1.0-alpha06")
 
     // AndroidX Test Core library for testing Android components
     androidTestImplementation("androidx.test:core:1.5.0")
-
     // AndroidX Test JUnit Runner for running AndroidJUnit4 tests
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
@@ -142,6 +155,8 @@ dependencies {
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")
     testImplementation("androidx.arch.core:core-testing:2.2.0")
     testImplementation("app.cash.turbine:turbine:1.0.0")
+    // Apollo test GraphQL
+    testImplementation("com.apollographql.apollo3:apollo-mockserver:3.7.3")
 }
 
 // Allow references to generated code

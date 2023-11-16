@@ -20,6 +20,7 @@ interface AuthDataSource {
     ): Result<Unit>
 
     suspend fun logout(): Result<Unit>
+    suspend fun forgotPassword(email: String): Result<Unit>
 
     suspend fun refreshToken(): Result<Auth>
 

@@ -1,10 +1,6 @@
 package com.cesarwillymc.mbcgroup.data.settings.network
 
-import android.os.Build
 import com.cesarwillymc.mbcgroup.BuildConfig
-import com.cesarwillymc.mbcgroup.data.sources.preferences.PreferencesDao
-import com.cesarwillymc.mbcgroup.util.extension.orEmpty
-import com.cesarwillymc.mbcgroup.util.state.dataOrNull
 import okhttp3.Interceptor
 import okhttp3.Response
 import javax.inject.Inject

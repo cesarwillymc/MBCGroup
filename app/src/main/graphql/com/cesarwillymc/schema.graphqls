@@ -1,0 +1,24 @@
+type Survey {
+    id: ID!
+    title: String!
+    description: String!
+    coverImageUrl: String!
+}
+
+type SurveyEdge {
+    node: Survey!
+}
+
+type SurveyConnection {
+    edges: [SurveyEdge!]!
+    pageInfo: PageInfo!
+    totalCount: Int!
+}
+
+type PageInfo {
+    hasNextPage: Boolean!
+}
+
+type Query {
+    surveys(first: Int!): SurveyConnection!
+}

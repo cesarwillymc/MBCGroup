@@ -109,6 +109,9 @@ dependencies {
     implementation("androidx.compose.material3:material3:1.2.0-alpha08")
     implementation("androidx.navigation:navigation-compose:2.7.3")
 
+    //Splash Screen
+    implementation("androidx.core:core-splashscreen:1.0.1")
+
     // Constraint
     implementation("androidx.constraintlayout:constraintlayout-compose:1.0.1")
 
@@ -140,7 +143,6 @@ dependencies {
 
     // AndroidX Test Core library for testing Android components
     androidTestImplementation("androidx.test:core:1.5.0")
-
     // AndroidX Test JUnit Runner for running AndroidJUnit4 tests
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")

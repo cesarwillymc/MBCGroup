@@ -21,5 +21,7 @@ interface AuthDataSource {
 
     suspend fun logout(): Result<Unit>
 
+    suspend fun refreshToken(): Result<Auth>
+
     suspend fun isLogged(): Result<Boolean>
 }

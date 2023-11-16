@@ -8,6 +8,6 @@ package com.cesarwillymc.mbcgroup.domain.usecase.entities
  */
 data class Auth(
     val token: String,
-    val tokenType:String,
+    val tokenType: String,
     val refreshToken: String
 )

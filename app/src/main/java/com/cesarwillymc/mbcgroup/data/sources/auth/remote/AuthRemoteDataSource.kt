@@ -3,6 +3,7 @@ package com.cesarwillymc.mbcgroup.data.sources.auth.remote
 import com.cesarwillymc.mbcgroup.data.sources.auth.entities.AuthRequest
 import com.cesarwillymc.mbcgroup.data.sources.auth.entities.AuthResponse
 import com.cesarwillymc.mbcgroup.data.sources.auth.entities.LogoutRequest
+import com.cesarwillymc.mbcgroup.data.sources.auth.entities.RefreshTokenRequest
 import com.cesarwillymc.mbcgroup.util.state.Result
 
 /**
@@ -19,4 +20,7 @@ interface AuthRemoteDataSource {
     suspend fun logout(
         logoutRequest: LogoutRequest
     ): Result<Unit>
+    suspend fun refreshToken(
+        refresh: RefreshTokenRequest
+    ): Result<AuthResponse>
 }

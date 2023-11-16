@@ -31,8 +31,8 @@ class SessionInterceptor @Inject constructor(
 
     private fun getToken(): String {
         return preferencesDao.let {
-            return@let it.getTokenType.dataOrNull().orEmpty() +
-                    it.getToken.dataOrNull().orEmpty()
+            return@let it.getTokenType.dataOrNull().orEmpty() + " " +
+                it.getToken.dataOrNull().orEmpty()
         }
     }
 

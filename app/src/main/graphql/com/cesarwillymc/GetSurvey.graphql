@@ -1,0 +1,14 @@
+#query GetSurveys($first: Int!) {
+#    surveys(first: $first) {
+#        edges {
+#            node {
+#                id
+#                title
+#            }
+#        }
+#        pageInfo {
+#            hasNextPage
+#        }
+#        totalCount
+#    }
+#}

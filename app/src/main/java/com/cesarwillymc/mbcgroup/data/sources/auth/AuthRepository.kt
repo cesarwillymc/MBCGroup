@@ -2,6 +2,7 @@ package com.cesarwillymc.mbcgroup.data.sources.auth
 
 import com.cesarwillymc.mbcgroup.data.sources.auth.entities.AuthRequest
 import com.cesarwillymc.mbcgroup.data.sources.auth.entities.LogoutRequest
+import com.cesarwillymc.mbcgroup.data.sources.auth.entities.RefreshTokenRequest
 import com.cesarwillymc.mbcgroup.data.sources.auth.mapper.AuthResultMapper
 import com.cesarwillymc.mbcgroup.data.sources.auth.remote.AuthRemoteDataSource
 import com.cesarwillymc.mbcgroup.data.sources.preferences.PreferencesDao
@@ -28,6 +29,8 @@ class AuthRepository @Inject constructor(
             .map(resultMapper::fromResponseToDomain).also {
                 if (it.isSuccess) {
                     sharedDao.saveToken(it.dataOrNull()?.token.orEmpty())
+                    sharedDao.saveRefreshToken(it.dataOrNull()?.refreshToken.orEmpty())
+                    sharedDao.saveTokenType(it.dataOrNull()?.tokenType.orEmpty())
                 }
             }
     }
@@ -41,10 +44,23 @@ class AuthRepository @Inject constructor(
             }
     }
 
+    override suspend fun refreshToken(): Result<Auth> {
+        return remoteDataSource.refreshToken(
+            RefreshTokenRequest(
+                sharedDao.getRefreshToken.dataOrNull().orEmpty()
+            )
+        ).map(resultMapper::fromResponseToDomain).also {
+            if (it.isSuccess) {
+                sharedDao.saveToken(it.dataOrNull()?.token.orEmpty())
+                sharedDao.saveRefreshToken(it.dataOrNull()?.refreshToken.orEmpty())
+                sharedDao.saveTokenType(it.dataOrNull()?.tokenType.orEmpty())
+            }
+        }
+    }
+
     override suspend fun saveToken(token: String): Result<Unit> {
         return sharedDao.saveToken(token)
     }
-
 
     override suspend fun isLogged(): Result<Boolean> {
         return sharedDao.isLogged

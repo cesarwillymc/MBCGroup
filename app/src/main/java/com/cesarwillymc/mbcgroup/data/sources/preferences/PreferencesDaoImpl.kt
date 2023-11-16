@@ -14,6 +14,7 @@ class PreferencesDaoImpl @Inject constructor(
 
         const val USER_SESSION = "user_information"
         const val USER_SESSION_TYPE = "user_information_type"
+        const val USER_SESSION_REFRESH = "user_information_refresg"
     }
 
     override val getToken: Result<String>
@@ -33,6 +34,20 @@ class PreferencesDaoImpl @Inject constructor(
     override val getTokenType: Result<String>
         get() = try {
             val session = sharedPreferences.getString(USER_SESSION_TYPE, EMPTY_STRING)
+            Result.Success(data = session.orEmpty())
+        } catch (e: Exception) {
+            Result.Error(e)
+        }
+
+    override fun saveRefreshToken(value: String): Result<Unit> {
+        sharedPreferences.edit {
+            this.putString(USER_SESSION_REFRESH, value)
+        }
+        return Result.Success(Unit)
+    }
+    override val getRefreshToken: Result<String>
+        get() = try {
+            val session = sharedPreferences.getString(USER_SESSION_REFRESH, EMPTY_STRING)
             Result.Success(data = session.orEmpty())
         } catch (e: Exception) {
             Result.Error(e)

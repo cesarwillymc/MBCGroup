@@ -3,6 +3,7 @@ package com.cesarwillymc.mbcgroup.data.sources.auth.service
 import com.cesarwillymc.mbcgroup.data.sources.auth.entities.AuthRequest
 import com.cesarwillymc.mbcgroup.data.sources.auth.entities.AuthResponse
 import com.cesarwillymc.mbcgroup.data.sources.auth.entities.LogoutRequest
+import com.cesarwillymc.mbcgroup.data.sources.auth.entities.RefreshTokenRequest
 import retrofit2.http.Body
 import retrofit2.http.POST
 
@@ -23,8 +24,14 @@ interface AuthService {
         @Body body: LogoutRequest
     )
 
+    @POST(REFRESH)
+    suspend fun refreshToken(
+        @Body body: RefreshTokenRequest
+    ): AuthResponse
+
     private companion object {
         const val LOGIN = "api/v1/oauth/token"
         const val LOGOUT = "api/v1/oauth/revoke"
+        const val REFRESH = "api/v1/oauth/token"
     }
 }

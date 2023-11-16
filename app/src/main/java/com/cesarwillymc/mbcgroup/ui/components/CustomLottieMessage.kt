@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -37,7 +38,7 @@ fun CustomLottieMessage(
 ) {
     val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(lottie))
 
-    Box(modifier = modifier.fillMaxSize()) {
+    Box(modifier = modifier.fillMaxSize().statusBarsPadding()) {
         Column(
             modifier = modifier.align(Alignment.Center),
             horizontalAlignment = Alignment.CenterHorizontally,

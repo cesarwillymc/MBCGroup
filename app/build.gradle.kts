@@ -143,6 +143,10 @@ dependencies {
 
     // AndroidX Test Core library for testing Android components
     androidTestImplementation("androidx.test:core:1.5.0")
+
+    //Shimmer
+    implementation("com.valentinilk.shimmer:compose-shimmer:1.2.0")
+    
     // AndroidX Test JUnit Runner for running AndroidJUnit4 tests
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")

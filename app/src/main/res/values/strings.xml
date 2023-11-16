@@ -37,4 +37,5 @@
     <string name="lbl_home">Home</string>
     <string name="lbl_onclick_logout">Onclick logout</string>
     <string name="desc_description">Hello I\'m Cesar Canaza.</string>
+    <string name="lbl_today">Today</string>
 </resources>

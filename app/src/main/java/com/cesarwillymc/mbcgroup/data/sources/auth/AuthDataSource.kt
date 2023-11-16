@@ -1,6 +1,6 @@
 package com.cesarwillymc.mbcgroup.data.sources.auth
 
-import com.cesarwillymc.mbcgroup.domain.usecase.entities.Auth
+import com.cesarwillymc.mbcgroup.domain.usecase.auth.entities.Auth
 import com.cesarwillymc.mbcgroup.util.state.Result
 
 /**

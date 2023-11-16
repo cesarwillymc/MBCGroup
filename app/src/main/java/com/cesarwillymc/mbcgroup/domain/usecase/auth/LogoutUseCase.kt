@@ -1,4 +1,4 @@
-package com.cesarwillymc.mbcgroup.domain.usecase
+package com.cesarwillymc.mbcgroup.domain.usecase.auth
 
 import com.cesarwillymc.mbcgroup.data.sources.auth.AuthDataSource
 import com.cesarwillymc.mbcgroup.di.IoDispatcher
@@ -13,13 +13,13 @@ import javax.inject.Inject
  *
  * IOWA, United States.
  */
-class GetLoggedStateUseCase @Inject constructor(
+class LogoutUseCase @Inject constructor(
     private val repository: AuthDataSource,
     @IoDispatcher dispatcher: CoroutineDispatcher
-) : SuspendUseCase<Unit, Boolean>(
+) : SuspendUseCase<Unit, Unit>(
     dispatcher
 ) {
-    override suspend fun execute(parameters: Unit): Result<Boolean> {
-        return repository.isLogged()
+    override suspend fun execute(parameters: Unit): Result<Unit> {
+        return repository.logout()
     }
 }

@@ -8,7 +8,7 @@ import com.cesarwillymc.mbcgroup.data.sources.auth.entities.RefreshTokenRequest
 import com.cesarwillymc.mbcgroup.data.sources.auth.mapper.AuthResultMapper
 import com.cesarwillymc.mbcgroup.data.sources.auth.remote.AuthRemoteDataSource
 import com.cesarwillymc.mbcgroup.data.sources.preferences.PreferencesDao
-import com.cesarwillymc.mbcgroup.domain.usecase.entities.Auth
+import com.cesarwillymc.mbcgroup.domain.usecase.auth.entities.Auth
 import com.cesarwillymc.mbcgroup.util.state.Result
 import com.cesarwillymc.mbcgroup.util.state.dataOrNull
 import com.cesarwillymc.mbcgroup.util.state.isSuccess

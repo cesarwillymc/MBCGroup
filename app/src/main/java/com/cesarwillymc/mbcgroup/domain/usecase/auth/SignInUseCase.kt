@@ -1,8 +1,10 @@
-package com.cesarwillymc.mbcgroup.domain.usecase
+package com.cesarwillymc.mbcgroup.domain.usecase.auth
 
 import com.cesarwillymc.mbcgroup.data.sources.auth.AuthDataSource
 import com.cesarwillymc.mbcgroup.di.IoDispatcher
 import com.cesarwillymc.mbcgroup.domain.base.SuspendUseCase
+import com.cesarwillymc.mbcgroup.domain.usecase.auth.entities.Auth
+import com.cesarwillymc.mbcgroup.domain.usecase.auth.entities.AuthParams
 import com.cesarwillymc.mbcgroup.util.state.Result
 import kotlinx.coroutines.CoroutineDispatcher
 import javax.inject.Inject
@@ -13,13 +15,13 @@ import javax.inject.Inject
  *
  * IOWA, United States.
  */
-class ForgotUseCase @Inject constructor(
+class SignInUseCase @Inject constructor(
     private val repository: AuthDataSource,
     @IoDispatcher dispatcher: CoroutineDispatcher
-) : SuspendUseCase<String, Unit>(
+) : SuspendUseCase<AuthParams, Auth>(
     dispatcher
 ) {
-    override suspend fun execute(parameters: String): Result<Unit> {
-        return repository.forgotPassword(parameters)
+    override suspend fun execute(parameters: AuthParams): Result<Auth> {
+        return repository.signIn(email = parameters.email, password = parameters.password)
     }
 }

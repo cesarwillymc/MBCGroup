@@ -2,7 +2,7 @@ package com.cesarwillymc.mbcgroup.presentation.splash
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.cesarwillymc.mbcgroup.domain.usecase.GetLoggedStateUseCase
+import com.cesarwillymc.mbcgroup.domain.usecase.auth.GetLoggedStateUseCase
 import com.cesarwillymc.mbcgroup.ui.navigation.route.AuthRoute
 import com.cesarwillymc.mbcgroup.ui.navigation.route.MainRoute
 import com.cesarwillymc.mbcgroup.util.extension.orEmpty

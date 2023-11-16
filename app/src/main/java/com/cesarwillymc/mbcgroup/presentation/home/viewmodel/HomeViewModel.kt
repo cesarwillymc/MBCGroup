@@ -2,7 +2,7 @@ package com.cesarwillymc.mbcgroup.presentation.home.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.cesarwillymc.mbcgroup.domain.usecase.LogoutUseCase
+import com.cesarwillymc.mbcgroup.domain.usecase.auth.LogoutUseCase
 import com.cesarwillymc.mbcgroup.presentation.auth.state.AuthUiState
 import com.cesarwillymc.mbcgroup.util.state.isError
 import com.cesarwillymc.mbcgroup.util.state.isSuccess

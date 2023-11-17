@@ -1,6 +1,7 @@
 package com.cesarwillymc.mbcgroup.presentation.home.component
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -26,7 +27,6 @@ import com.cesarwillymc.mbcgroup.R
 import com.cesarwillymc.mbcgroup.ui.theme.TextColor
 import com.cesarwillymc.mbcgroup.ui.theme.Typography
 import com.cesarwillymc.mbcgroup.util.extension.formatDateWithSimpleDateFormat
-import com.valentinilk.shimmer.shimmer
 import java.util.Date
 
 /**
@@ -36,20 +36,13 @@ import java.util.Date
  * IOWA, United States.
  */
 @Composable
-fun ProfileCard(
-    isShimmer: Boolean
-) {
-
-    val modifier = if (isShimmer) {
-        Modifier.shimmer()
-    } else {
-        Modifier
-    }
+fun ProfileCard(openDrawer: () -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .statusBarsPadding()
-            .padding(top = dimensionResource(id = R.dimen.Normal100)),
+            .padding(top = dimensionResource(id = R.dimen.Normal100))
+            .padding(horizontal = dimensionResource(id = R.dimen.Normal100)),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
@@ -57,21 +50,20 @@ fun ProfileCard(
             Text(
                 text = formatDateWithSimpleDateFormat(Date()).uppercase(),
                 style = Typography.bodyMedium.copy(fontWeight = FontWeight.ExtraBold),
-                color = TextColor,
-                modifier = modifier
+                color = TextColor
             )
             Text(
                 text = stringResource(R.string.lbl_today).uppercase(),
                 style = Typography.titleLarge,
-                color = TextColor,
-                modifier = modifier
+                color = TextColor
             )
         }
         Spacer(modifier = Modifier.size(dimensionResource(id = R.dimen.Small100)))
 
         Box(
-            modifier = modifier
+            modifier = Modifier
                 .clip(shape = CircleShape)
+                .clickable(onClick = openDrawer)
         ) {
             Image(
                 painter = painterResource(id = R.drawable.profile),
@@ -86,7 +78,5 @@ fun ProfileCard(
 @Composable
 @Preview(name = "Light Theme", showBackground = true)
 fun ProfileCardPreview() {
-    ProfileCard(
-        isShimmer = true
-    )
+    ProfileCard {}
 }

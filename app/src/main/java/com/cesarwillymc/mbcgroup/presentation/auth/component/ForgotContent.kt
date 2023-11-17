@@ -33,7 +33,7 @@ fun ColumnScope.ForgotContent(
         isError = emailField.isError.collectAsState().value
     )
     CustomPrimaryButton(
-        title = stringResource(R.string.lbl_continue),
+        title = stringResource(R.string.lbl_reset),
         textColor = Color.Black,
         onClick = onContinueEmail,
         isEnabled = !isErrorEmail

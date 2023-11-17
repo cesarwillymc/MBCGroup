@@ -10,5 +10,5 @@ import com.cesarwillymc.mbcgroup.util.state.Result
  * IOWA, United States.
  */
 interface SurveyRemoteDataSource {
-    suspend fun getSurveys():  Result<GetSurveysQuery.Data?>
+    suspend fun getSurveys(): Result<GetSurveysQuery.Data?>
 }

@@ -16,6 +16,7 @@
     <string name="title_welcome">Hi!</string>
     <string name="lbl_email">Email</string>
     <string name="lbl_continue">Continue</string>
+    <string name="lbl_reset">Reset</string>
     <string name="lbl_or">or</string>
     <string name="lbl_forgot_password">Forgot your password?</string>
     <string name="til_sign_up">Sign Up</string>
@@ -36,6 +37,10 @@
     <string name="lbl_error">ERROR</string>
     <string name="lbl_home">Home</string>
     <string name="lbl_onclick_logout">Onclick logout</string>
-    <string name="desc_description">Hello I\'m Cesar Canaza.</string>
+    <string name="lbl_logout">Logout</string>
+    <string name="desc_description">Hello</string>
     <string name="lbl_today">Today</string>
+    <string name="lbl_start_survey">Start Survey</string>
+    <string name="lbl_check_email">Check your email.</string>
+    <string name="desc_check_email">We’ve email you instructions to reset your password.</string>
 </resources>

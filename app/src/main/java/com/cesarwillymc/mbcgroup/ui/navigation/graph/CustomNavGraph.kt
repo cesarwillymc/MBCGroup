@@ -64,7 +64,8 @@ fun CustomNavGraph(
         ) {
             HomeScreen(
                 homeViewModel = hiltViewModel(),
-                navigateToDetail = mainActions.navigateToDetail
+                navigateToDetail = mainActions.navigateToDetail,
+                navigateToAuth = authActions.navigateToAuth
             )
         }
         composable(

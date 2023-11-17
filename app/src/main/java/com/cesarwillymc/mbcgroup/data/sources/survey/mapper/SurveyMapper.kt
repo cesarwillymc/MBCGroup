@@ -10,5 +10,5 @@ import com.cesarwillymc.mbcgroup.domain.usecase.survey.entities.SurveyList
  * IOWA, United States.
  */
 interface SurveyMapper {
-     fun dataSurveyToDomain(data: GetSurveysQuery.Data?): SurveyList
+    fun dataSurveyToDomain(data: GetSurveysQuery.Data?): SurveyList
 }

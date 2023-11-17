@@ -12,7 +12,7 @@ import javax.inject.Inject
  * IOWA, United States.
  */
 class SurveyMapperImpl @Inject constructor() : SurveyMapper {
-    override  fun dataSurveyToDomain(data: GetSurveysQuery.Data?): SurveyList {
+    override fun dataSurveyToDomain(data: GetSurveysQuery.Data?): SurveyList {
         return data?.surveys?.let {
             SurveyList(
                 hasNext = it.pageInfo.hasNextPage,

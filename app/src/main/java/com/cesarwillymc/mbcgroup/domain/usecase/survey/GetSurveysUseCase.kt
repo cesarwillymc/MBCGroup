@@ -1,8 +1,6 @@
 package com.cesarwillymc.mbcgroup.domain.usecase.survey
 
-import com.cesarwillymc.mbcgroup.data.sources.auth.AuthDataSource
 import com.cesarwillymc.mbcgroup.data.sources.survey.SurveyDataSource
-import com.cesarwillymc.mbcgroup.data.sources.survey.SurveyRepository
 import com.cesarwillymc.mbcgroup.di.IoDispatcher
 import com.cesarwillymc.mbcgroup.domain.base.SuspendUseCase
 import com.cesarwillymc.mbcgroup.domain.usecase.survey.entities.SurveyList

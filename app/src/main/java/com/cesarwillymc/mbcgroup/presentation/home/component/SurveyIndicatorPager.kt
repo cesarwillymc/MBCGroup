@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Text
-import com.cesarwillymc.mbcgroup.ui.theme.Typography
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -25,8 +24,7 @@ import com.cesarwillymc.mbcgroup.R
 import com.cesarwillymc.mbcgroup.domain.usecase.survey.entities.SurveyItem
 import com.cesarwillymc.mbcgroup.ui.theme.TextColor
 import com.cesarwillymc.mbcgroup.ui.theme.TextColorOpacity
-import com.cesarwillymc.mbcgroup.util.constants.FRACTION_30
-import com.cesarwillymc.mbcgroup.util.constants.FRACTION_80
+import com.cesarwillymc.mbcgroup.ui.theme.Typography
 import com.cesarwillymc.mbcgroup.util.constants.FRACTION_90
 
 /**
@@ -43,12 +41,10 @@ fun SurveyContentPager(
     modifier: Modifier = Modifier,
     navigateDetail: (SurveyItem) -> Unit
 ) {
-
     Column(
         verticalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.Normal100)),
         modifier = modifier
     ) {
-
         Row(
             Modifier
                 .wrapContentHeight()
@@ -89,6 +85,5 @@ fun SurveyContentPager(
                     .padding(bottom = dimensionResource(id = R.dimen.Normal100))
             )
         }
-
     }
 }

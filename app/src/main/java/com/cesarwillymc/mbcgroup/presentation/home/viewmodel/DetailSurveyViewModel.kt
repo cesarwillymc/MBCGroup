@@ -6,9 +6,9 @@ import com.cesarwillymc.mbcgroup.presentation.home.state.DetailSurveyUiState
 import com.cesarwillymc.mbcgroup.ui.navigation.route.MainRoute
 import com.cesarwillymc.mbcgroup.util.extension.fromJson
 import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
+import javax.inject.Inject
 
 /**
  * Created by Cesar Canaza on 10/10/23.
@@ -20,6 +20,9 @@ import kotlinx.coroutines.flow.update
 class DetailSurveyViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
+    val detailUiState get() = _detailUiState
+    private val _detailUiState = MutableStateFlow(DetailSurveyUiState())
+
     init {
         onLoadArgument()
     }
@@ -29,8 +32,4 @@ class DetailSurveyViewModel @Inject constructor(
             _detailUiState.update { update -> update.copy(data = fromJson(it)) }
         }
     }
-
-    val detailUiState get() = _detailUiState
-    private val _detailUiState = MutableStateFlow(DetailSurveyUiState())
-
 }

@@ -24,6 +24,7 @@ interface AuthService {
     suspend fun logout(
         @Body body: LogoutRequest
     )
+
     @POST(FORGOT)
     suspend fun forgotPassword(
         @Body body: ForgotPasswordRequest

@@ -16,7 +16,7 @@ import javax.inject.Inject
 class SurveyRepository @Inject constructor(
     private val surveyRemoteDataSource: SurveyRemoteDataSource,
     private val mapper: SurveyMapper
-):SurveyDataSource {
+) : SurveyDataSource {
     override suspend fun getSurveys(): Result<SurveyList> {
         return surveyRemoteDataSource.getSurveys().map(mapper::dataSurveyToDomain)
     }

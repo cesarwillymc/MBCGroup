@@ -4,9 +4,7 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
-
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
@@ -30,7 +28,11 @@ import com.cesarwillymc.mbcgroup.util.constants.FRACTION_30
  */
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun HomeContent(surveyList: SurveyList, navigateToDetail: (SurveyItem) -> Unit) {
+fun HomeContent(
+    surveyList: SurveyList,
+    navigateToDetail: (SurveyItem) -> Unit,
+    openDrawer: () -> Unit
+) {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -42,7 +44,6 @@ fun HomeContent(surveyList: SurveyList, navigateToDetail: (SurveyItem) -> Unit) 
             state = pagerState,
             modifier = Modifier.fillMaxSize()
         ) { page ->
-            // Our page content
 
             Box(
                 modifier = Modifier
@@ -73,6 +74,6 @@ fun HomeContent(surveyList: SurveyList, navigateToDetail: (SurveyItem) -> Unit) 
                 .padding(dimensionResource(id = R.dimen.Normal100)),
             navigateDetail = navigateToDetail
         )
-        ProfileCard(isShimmer = false)
+        ProfileCard(openDrawer = openDrawer)
     }
 }

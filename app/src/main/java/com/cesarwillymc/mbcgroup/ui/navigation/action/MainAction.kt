@@ -14,7 +14,7 @@ class MainAction(navController: NavHostController) {
         }
     }
     val navigateToDetail: (SurveyItem) -> Unit = {
-        navController.navigate(MainRoute.Detail.path.replace("{$ARGUMENT}",toJson(it)))
+        navController.navigate(MainRoute.Detail.path.replace("{$ARGUMENT}", toJson(it)))
     }
     val navigateUp: () -> Unit = {
         navController.navigateUp()

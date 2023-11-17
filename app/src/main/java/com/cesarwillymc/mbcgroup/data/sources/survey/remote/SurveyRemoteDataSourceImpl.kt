@@ -1,9 +1,10 @@
 package com.cesarwillymc.mbcgroup.data.sources.survey.remote
 
 import com.apollographql.apollo3.ApolloClient
-import com.cesarwillymc.mbcgroup.data.settings.network.util.BaseRemoteDataSource
-import com.cesarwillymc.mbcgroup.util.state.Result
 import com.cesarwillymc.GetSurveysQuery
+import com.cesarwillymc.mbcgroup.data.settings.network.util.BaseRemoteDataSource
+import com.cesarwillymc.mbcgroup.util.constants.THREE
+import com.cesarwillymc.mbcgroup.util.state.Result
 import javax.inject.Inject
 
 /**
@@ -17,7 +18,7 @@ class SurveyRemoteDataSourceImpl @Inject constructor(
 ) : BaseRemoteDataSource(), SurveyRemoteDataSource {
     override suspend fun getSurveys(): Result<GetSurveysQuery.Data?> {
         return getResult {
-            apolloClient.query(GetSurveysQuery(3)).execute().data
+            apolloClient.query(GetSurveysQuery(THREE)).execute().data
         }
     }
 }

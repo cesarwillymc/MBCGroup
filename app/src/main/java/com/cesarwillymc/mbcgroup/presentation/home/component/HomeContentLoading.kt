@@ -33,6 +33,7 @@ import com.cesarwillymc.mbcgroup.util.extension.rememberResponsive
  * IOWA, United States.
  */
 @Composable
+@SuppressWarnings("LongMethod")
 fun HomeContentLoading() {
     val responsive = rememberResponsive()
     Box(
@@ -50,9 +51,18 @@ fun HomeContentLoading() {
             horizontalArrangement = Arrangement.SpaceAround
         ) {
             Column(verticalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.Small50))) {
-                TextShimmer(modifier = Modifier.size(width = responsive.withR(FRACTION_50) , height = dimensionResource(id = R.dimen.Normal100)))
-                TextShimmer(modifier = Modifier.size(width = responsive.withR(FRACTION_30) , height = dimensionResource(id = R.dimen.Normal100)))
-
+                TextShimmer(
+                    modifier = Modifier.size(
+                        width = responsive.withR(FRACTION_50),
+                        height = dimensionResource(id = R.dimen.Normal100)
+                    )
+                )
+                TextShimmer(
+                    modifier = Modifier.size(
+                        width = responsive.withR(FRACTION_30),
+                        height = dimensionResource(id = R.dimen.Normal100)
+                    )
+                )
             }
             Spacer(modifier = Modifier.size(dimensionResource(id = R.dimen.Small100)))
 
@@ -66,12 +76,36 @@ fun HomeContentLoading() {
                 dimensionResource(id = R.dimen.Normal100)
             )
         ) {
-            TextShimmer(modifier = Modifier.size(width = responsive.withR(FRACTION_10) , height = dimensionResource(id = R.dimen.Normal100)))
-            TextShimmer(modifier = Modifier.size(width = responsive.withR(FRACTION_70) , height = dimensionResource(id = R.dimen.Normal100)))
-            TextShimmer(modifier = Modifier.size(width = responsive.withR(FRACTION_40) , height = dimensionResource(id = R.dimen.Normal100)))
-            TextShimmer(modifier = Modifier.size(width = responsive.withR(FRACTION_90) , height = dimensionResource(id = R.dimen.Normal100)))
-            TextShimmer(modifier = Modifier.size(width = responsive.withR(FRACTION_30) , height = dimensionResource(id = R.dimen.Normal100)))
-
+            TextShimmer(
+                modifier = Modifier.size(
+                    width = responsive.withR(FRACTION_10),
+                    height = dimensionResource(id = R.dimen.Normal100)
+                )
+            )
+            TextShimmer(
+                modifier = Modifier.size(
+                    width = responsive.withR(FRACTION_70),
+                    height = dimensionResource(id = R.dimen.Normal100)
+                )
+            )
+            TextShimmer(
+                modifier = Modifier.size(
+                    width = responsive.withR(FRACTION_40),
+                    height = dimensionResource(id = R.dimen.Normal100)
+                )
+            )
+            TextShimmer(
+                modifier = Modifier.size(
+                    width = responsive.withR(FRACTION_90),
+                    height = dimensionResource(id = R.dimen.Normal100)
+                )
+            )
+            TextShimmer(
+                modifier = Modifier.size(
+                    width = responsive.withR(FRACTION_30),
+                    height = dimensionResource(id = R.dimen.Normal100)
+                )
+            )
         }
     }
 }

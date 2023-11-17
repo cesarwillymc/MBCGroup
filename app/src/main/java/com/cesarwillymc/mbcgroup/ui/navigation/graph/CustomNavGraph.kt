@@ -9,6 +9,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.cesarwillymc.mbcgroup.presentation.auth.ForgotScreen
 import com.cesarwillymc.mbcgroup.presentation.auth.LoginScreen
+import com.cesarwillymc.mbcgroup.presentation.home.DetailSurveyScreen
 import com.cesarwillymc.mbcgroup.presentation.home.HomeScreen
 import com.cesarwillymc.mbcgroup.presentation.splash.SplashScreen
 import com.cesarwillymc.mbcgroup.ui.navigation.action.AuthAction
@@ -63,7 +64,17 @@ fun CustomNavGraph(
         ) {
             HomeScreen(
                 homeViewModel = hiltViewModel(),
-                navigateAuthScreen = authActions.navigateToAuth
+                navigateToDetail = mainActions.navigateToDetail,
+                navigateToAuth = authActions.navigateToAuth
+            )
+        }
+        composable(
+            route = MainRoute.Detail.path,
+            deepLinks = MainRoute.Detail.path.generateDeepLinks()
+        ) {
+            DetailSurveyScreen(
+                detailSurveyViewModel = hiltViewModel(),
+                navigateUp = mainActions.navigateUp
             )
         }
     }

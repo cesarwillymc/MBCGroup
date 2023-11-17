@@ -3,8 +3,8 @@ package com.cesarwillymc.mbcgroup.presentation.auth.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.cesarwillymc.mbcgroup.data.settings.network.util.error.ErrorSource
-import com.cesarwillymc.mbcgroup.domain.usecase.SignInUseCase
-import com.cesarwillymc.mbcgroup.domain.usecase.entities.AuthParams
+import com.cesarwillymc.mbcgroup.domain.usecase.auth.SignInUseCase
+import com.cesarwillymc.mbcgroup.domain.usecase.auth.entities.AuthParams
 import com.cesarwillymc.mbcgroup.presentation.auth.state.AuthUiState
 import com.cesarwillymc.mbcgroup.ui.validations.field.EmailField
 import com.cesarwillymc.mbcgroup.ui.validations.field.PasswordField

@@ -23,7 +23,7 @@ import com.cesarwillymc.mbcgroup.ui.theme.TextColorButton
 
 @Composable
 fun CustomPrimaryButton(
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier.fillMaxWidth(),
     title: String,
     textColor: Color = TextColorButton,
     isEnabled: Boolean = true,
@@ -31,10 +31,17 @@ fun CustomPrimaryButton(
     @DrawableRes leadingIcon: Int? = null,
     onClick: () -> Unit
 ) {
+    val modifierText = if (leadingIcon == null) {
+        Modifier
+            .padding(dimensionResource(id = R.dimen.Small100))
+    } else {
+        Modifier
+            .padding(dimensionResource(id = R.dimen.Small100))
+            .fillMaxWidth()
+    }
     Button(
         onClick = onClick,
-        modifier = modifier
-            .fillMaxWidth(),
+        modifier = modifier,
         enabled = isEnabled,
         shape = MaterialTheme.shapes.medium,
         colors = ButtonDefaults.buttonColors(
@@ -55,9 +62,7 @@ fun CustomPrimaryButton(
         }
         Text(
             text = title,
-            modifier = Modifier
-                .padding(dimensionResource(id = R.dimen.Small100))
-                .fillMaxWidth(),
+            modifier = modifierText,
             textAlign = TextAlign.Center
         )
     }

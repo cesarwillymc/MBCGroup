@@ -24,17 +24,17 @@ abstract class AuthModule {
 
     @Singleton
     @Binds
-    abstract fun bindsSearchDataSource(searchRepository: AuthRepository): AuthDataSource
+    abstract fun bindsAuthDataSource(authRepository: AuthRepository): AuthDataSource
 
     @Singleton
     @Binds
-    abstract fun bindsSearchResultMapper(
-        searchResultMapper: AuthResultMapperImpl
+    abstract fun bindsAuthResultMapper(
+        authResultMapper: AuthResultMapperImpl
     ): AuthResultMapper
 
     @Singleton
     @Binds
-    abstract fun bindsSearchRemoteDataSource(
-        searchResultRemoteDataSource: AuthRemoteDataSourceImpl
+    abstract fun bindsAuthRemoteDataSource(
+        authResultRemoteDataSource: AuthRemoteDataSourceImpl
     ): AuthRemoteDataSource
 }

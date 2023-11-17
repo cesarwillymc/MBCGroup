@@ -1,7 +1,7 @@
 package com.cesarwillymc.mbcgroup.data.sources.auth.mapper
 
 import com.cesarwillymc.mbcgroup.data.sources.auth.entities.AuthResponse
-import com.cesarwillymc.mbcgroup.domain.usecase.entities.Auth
+import com.cesarwillymc.mbcgroup.domain.usecase.auth.entities.Auth
 
 /**
  * Created by Cesar Canaza on 11/15/23.

@@ -1,12 +1,14 @@
 package com.cesarwillymc.mbcgroup.data.sources.auth
 
 import com.cesarwillymc.mbcgroup.data.sources.auth.entities.AuthRequest
+import com.cesarwillymc.mbcgroup.data.sources.auth.entities.ForgotEmailRequest
+import com.cesarwillymc.mbcgroup.data.sources.auth.entities.ForgotPasswordRequest
 import com.cesarwillymc.mbcgroup.data.sources.auth.entities.LogoutRequest
 import com.cesarwillymc.mbcgroup.data.sources.auth.entities.RefreshTokenRequest
 import com.cesarwillymc.mbcgroup.data.sources.auth.mapper.AuthResultMapper
 import com.cesarwillymc.mbcgroup.data.sources.auth.remote.AuthRemoteDataSource
 import com.cesarwillymc.mbcgroup.data.sources.preferences.PreferencesDao
-import com.cesarwillymc.mbcgroup.domain.usecase.entities.Auth
+import com.cesarwillymc.mbcgroup.domain.usecase.auth.entities.Auth
 import com.cesarwillymc.mbcgroup.util.state.Result
 import com.cesarwillymc.mbcgroup.util.state.dataOrNull
 import com.cesarwillymc.mbcgroup.util.state.isSuccess
@@ -42,6 +44,10 @@ class AuthRepository @Inject constructor(
                     sharedDao.cleanPreferences()
                 }
             }
+    }
+
+    override suspend fun forgotPassword(email: String): Result<Unit> {
+        return remoteDataSource.forgotPassword(ForgotPasswordRequest(ForgotEmailRequest(email)))
     }
 
     override suspend fun refreshToken(): Result<Auth> {

@@ -1,4 +1,4 @@
-package com.cesarwillymc.mbcgroup.domain.usecase.entities
+package com.cesarwillymc.mbcgroup.domain.usecase.auth.entities
 
 /**
  * Created by Cesar Canaza on 10/9/23.

@@ -12,10 +12,7 @@ class AuthAction(navController: NavHostController) {
     }
     val navigateToSignIn: (String) -> Unit = {
         navController.navigate(
-            AuthRoute.SignIn.path.replace(
-                "{${AuthRoute.EMAIL_KEY}}",
-                it
-            )
+            AuthRoute.SignIn.path
         )
     }
     val navigateToForgot: () -> Unit = {

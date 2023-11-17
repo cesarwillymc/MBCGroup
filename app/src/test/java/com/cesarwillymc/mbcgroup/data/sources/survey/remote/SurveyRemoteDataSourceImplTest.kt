@@ -8,8 +8,8 @@ import com.cesarwillymc.mbcgroup.util.state.isError
 import com.cesarwillymc.mbcgroup.util.state.isSuccess
 import com.cesarwillymc.mbcgroup.utils.data.ApolloGeneratorTest
 import kotlinx.coroutines.test.runTest
-import org.junit.Assert.assertTrue
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Test
 
 /**

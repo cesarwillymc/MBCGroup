@@ -64,10 +64,6 @@ class AuthRepository @Inject constructor(
         }
     }
 
-    override suspend fun saveToken(token: String): Result<Unit> {
-        return sharedDao.saveToken(token)
-    }
-
     override suspend fun isLogged(): Result<Boolean> {
         return sharedDao.isLogged
     }

@@ -3,7 +3,8 @@
 
 Mobile developer willing to learn old and new technologies, I like the team work and communication.
 Thank you for check this project.
-<img src="image/recording.gif" width="250" align="center" hspace="20">
+
+- <img src="image/recording.gif" width="250" align="center" hspace="20">
 ## Architecture MVVM with clean
 
 ### data (Repositories - Framework)

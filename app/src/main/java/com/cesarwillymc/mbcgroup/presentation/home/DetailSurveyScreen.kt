@@ -1,6 +1,7 @@
 package com.cesarwillymc.mbcgroup.presentation.home
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -27,6 +28,7 @@ import com.cesarwillymc.mbcgroup.ui.components.CustomPrimaryButton
 import com.cesarwillymc.mbcgroup.ui.theme.TextColor
 import com.cesarwillymc.mbcgroup.ui.theme.TextColorOpacity
 import com.cesarwillymc.mbcgroup.ui.theme.Typography
+import com.cesarwillymc.mbcgroup.util.constants.FRACTION_30
 
 /**
  * Created by Cesar Canaza on 10/10/23.
@@ -43,12 +45,23 @@ fun DetailSurveyScreen(
     Scaffold { paddingValues ->
         val data = detailSurveyUiState.data
         if (data != null) {
-            Image(
-                painter = rememberImagePainter(data.coverImageUrl),
-                contentDescription = stringResource(R.string.lbl_onbackground),
-                modifier = Modifier.fillMaxSize(),
-                contentScale = ContentScale.Crop
-            )
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(color = Color.Black)
+            ) {
+                Image(
+                    painter = rememberImagePainter(data = data.coverImageUrl),
+                    contentDescription = "ImageCover",
+                    modifier = Modifier.fillMaxSize(),
+                    contentScale = ContentScale.Crop
+                )
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(color = Color.Black.copy(alpha = FRACTION_30))
+                )
+            }
             Box(
                 modifier = Modifier
                     .fillMaxSize()

@@ -1,0 +1,64 @@
+name: Android MBCGroup CI
+
+on:
+  push:
+    branches:
+      - develop
+      - main
+  pull_request:
+    branches:
+      - develop
+      - main
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    environment: ${{ github.ref_name }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+          cache: 'gradle'
+
+      - name: Set up Gradle cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties', '**/buildSrc/**/*.kt') }}
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Update local.properties
+        run: |
+          echo "SHARED_PREFERENCES_NAME=${{ secrets.SHARED_PREFERENCES_NAME }}" >> local.properties
+          echo "BASE_URL=${{ secrets.BASE_URL }}" >> local.properties
+          echo "BASE_URL_GQL=${{ secrets.BASE_URL_GQL }}" >> local.properties
+          echo "CLIENT_ID=${{ secrets.CLIENT_ID }}" >> local.properties
+          echo "CLIENT_SECRET=${{ secrets.CLIENT_SECRET }}" >> local.properties
+          echo "DEBUG_KEY_PASSWORD=${{ secrets.DEBUG_KEY_PASSWORD }}" >> local.properties
+
+      - name: Execute validations
+        run: ./gradlew executeValidations
+
+      - name: Build App
+        run: |
+          if [[ "${{ github.ref }}" == "refs/heads/main" ]]; then
+            ./gradlew assembleRelease
+          else
+            ./gradlew assembleDebug
+          fi
+
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: app-${{ github.ref == 'refs/heads/main' && 'release' || 'debug' }}
+          path: app/build/outputs/apk/${{ github.ref == 'refs/heads/main' && 'release' || 'debug' }}/app-${{ github.ref == 'refs/heads/main' && 'release' || 'debug' }}.apk

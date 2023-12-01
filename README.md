@@ -1,4 +1,8 @@
 # MBCGroup
+
+## CREDENTIALS 
+`  "email": "your_email@example.com"
+  "password": "12345678" `
 ## CESAR CANAZA
 
 Mobile developer willing to learn old and new technologies, I like the team work and communication.

@@ -105,4 +105,5 @@
 -keep class com.cesarwillymc.mbcgroup.domain.usecase.auth.entities.** { *; }
 -keep class com.cesarwillymc.mbcgroup.domain.usecase.survey.entities.** { *; }
 -keep class com.cesarwillymc.mbcgroup.ui.validations.common.** { *; }
+-keep class com.cesarwillymc.mbcgroup.data.settings.network.util.error.** { *; }
 

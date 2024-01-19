@@ -56,9 +56,9 @@ jobs:
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
-      - name: Create file
+      - name: Create Google Services File
         run: cat /home/runner/work/MBCGroup/MBCGroup/app/google-services.json | base64
-      - name: Putting data
+      - name: Add data Google Services File
         env:
           DATA: ${{ secrets.GOOGLE_SERVICES_JSON }}
         run: echo $DATA > /home/runner/work/MBCGroup/MBCGroup/app/google-services.json
@@ -97,7 +97,7 @@ jobs:
       - name: Set RELEASE_NOTE
         id: set_release_note
         run: |
-          RELEASE_NOTE=$(if [ -z "${{ inputs.releaseNotes }}" ]; then cat release_notes.txt; else echo "${{ inputs.releaseNotes }}"; fi)
+          RELEASE_NOTE=$(if [ "${{ inputs.releaseNotes }}" =="" ]; then cat release_notes.txt; else "${{ inputs.releaseNotes }}"; fi)
           echo "RELEASE_NOTE=$RELEASE_NOTE" >> $GITHUB_ENV
 #      - name: Execute validations
 #        run: ./gradlew executeValidations

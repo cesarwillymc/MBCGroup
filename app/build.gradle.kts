@@ -93,6 +93,7 @@ configure<com.google.firebase.appdistribution.gradle.AppDistributionExtension> {
     releaseNotesFile = "${projectDir}/../release_notes.txt"
     groups = getLocalProperty("TESTERS_GROUP", "")
 }
+
 dependencies {
 
     // Dagger

@@ -20,6 +20,11 @@ on:
           - all
           - qa
           - production
+      releaseNotes:
+        description: 'Release notes'
+        required: true
+        default: 'Update'
+        type: string
   push:
     branches:
       - develop
@@ -51,6 +56,12 @@ jobs:
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
+      - name: Create file
+        run: cat /home/runner/work/MBCGroup/MBCGroup/app/google-services.json | base64
+      - name: Putting data
+        env:
+          DATA: ${{ secrets.GOOGLE_SERVICES_JSON }}
+        run: echo $DATA > /home/runner/work/MBCGroup/MBCGroup/app/google-services.json
       - name: Configuration Local.properties
         env:
           SHARED_PREFERENCES_NAME: ${{ secrets.SHARED_PREFERENCES_NAME }}
@@ -69,6 +80,12 @@ jobs:
                ${{secrets.APP_ID_DEBUG}}
             else
                ${{secrets.APP_ID_RELEASE}}
+            fi
+          RELEASE_NOTE: |
+            if [[ "${{ inputs.releaseNotes }}" == "" ]]; then
+               cat release_notes.txt
+            else
+               ${{inputs.releaseNotes}}
             fi
         run: |
           echo "SHARED_PREFERENCES_NAME=$SHARED_PREFERENCES_NAME" >> local.properties
@@ -89,6 +106,7 @@ jobs:
           appId: $APP_ID
           token: ${{ secrets.FIREBASE_TOKEN }}
           groups: ${{ inputs.groupTester }}
+          releaseNotesFile: $RELEASE_NOTE
           file: app/build/outputs/apk/${{ inputs.buildType }}/app-${{ inputs.buildType }}.apk
       - name: Upload APK artifact
         uses: actions/upload-artifact@v2

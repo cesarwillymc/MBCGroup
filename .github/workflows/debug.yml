@@ -104,7 +104,7 @@ jobs:
         uses: wzieba/Firebase-Distribution-Github-Action@v1
         with:
           appId: $APP_ID
-          token: ${{ secrets.FIREBASE_TOKEN }}
+          serviceCredentialsFileContent: ${{ secrets.FIREBASE_TOKEN }}
           groups: ${{ inputs.groupTester }}
           releaseNotesFile: $RELEASE_NOTE
           file: app/build/outputs/apk/${{ inputs.buildType }}/app-${{ inputs.buildType }}.apk

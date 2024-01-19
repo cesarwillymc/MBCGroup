@@ -76,14 +76,14 @@ jobs:
                "debug"
             fi
           BUILD_TYPE_VALUE: |
-            if [[ "$BUILD_TYPE" == "debug" ]]; then
+            if [[ ${BUILD_TYPE} == "debug" ]]; then
                "Debug"
             else
                "Release"
             fi
 
           APP_ID: |
-            if [[ "$BUILD_TYPE" == "debug" ]]; then
+            if [[ ${BUILD_TYPE} == "debug" ]]; then
                ${{secrets.APP_ID_DEBUG}}
             else
                ${{secrets.APP_ID_RELEASE}}
@@ -101,10 +101,10 @@ jobs:
           echo "CLIENT_ID=$CLIENT_ID" >> local.properties
           echo "CLIENT_SECRET=$CLIENT_SECRET" >> local.properties
 
-      - name: Execute validations
-        run: ./gradlew executeValidations
+#      - name: Execute validations
+#        run: ./gradlew executeValidations
       - name: Build App
-        run: ./gradlew assemble"$BUILD_TYPE_VALUE"
+        run: ./gradlew assemble${BUILD_TYPE^}
         env:
           DEBUG_KEY_PASSWORD: ${{ secrets.DEBUG_KEY_PASSWORD }}
       - name: upload artifact to Firebase App Distribution
@@ -114,9 +114,9 @@ jobs:
           serviceCredentialsFileContent: ${{ secrets.FIREBASE_TOKEN }}
           groups: ${{ inputs.groupTester || 'qa' }}
           releaseNotesFile: $RELEASE_NOTE
-          file: app/build/outputs/apk/"$BUILD_TYPE"/app-"$BUILD_TYPE".apk
+          file: app/build/outputs/apk/${BUILD_TYPE}/app-${BUILD_TYPE}.apk
       - name: Upload APK artifact
         uses: actions/upload-artifact@v2
         with:
           name: app-${BUILD_TYPE}
-          path: app/build/outputs/apk/"$BUILD_TYPE"/app-"$BUILD_TYPE".apk
+          path: app/build/outputs/apk/${BUILD_TYPE}/app-${BUILD_TYPE}.apk

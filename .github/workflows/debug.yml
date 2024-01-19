@@ -98,6 +98,8 @@ jobs:
         run:  |
           echo "RELEASE_NOTE: $RELEASE_NOTE_TEXT"
           echo "APP_ID: $APP_ID"
+          echo "secretRelease: ${{secrets.APP_ID_RELEASE}}"
+          echo "secretDebug: ${{secrets.APP_ID_DEBUG}}"
           echo "fileroute: app/build/outputs/apk/${{ inputs.buildType || 'debug' }}/app-${{ inputs.buildType || 'debug' }}.apk"
       - name: Build App
         run: |

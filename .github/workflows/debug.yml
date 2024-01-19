@@ -2,8 +2,8 @@ name: Generate Debug
 
 on:
   workflow_dispatch:
-    buildType:
-      logLevel:
+    inputs:
+      buildType:
         description: 'Build Type'
         required: true
         default: 'debug'
@@ -11,6 +11,15 @@ on:
         options:
           - debug
           - release
+      groupTester:
+        description: 'Testers'
+        required: true
+        default: 'qa'
+        type: choice
+        options:
+          - all
+          - qa
+          - production
   push:
     branches:
       - develop
@@ -65,10 +74,16 @@ jobs:
       - name: Execute validations
         run: ./gradlew executeValidations
       - name: Build App
-        run: ./gradlew assemble$VALUE_DATA appDistributionUpload$VALUE_DATA
+        run: ./gradlew assemble$VALUE_DATA
         env:
           DEBUG_KEY_PASSWORD: ${{ secrets.DEBUG_KEY_PASSWORD }}
-          TESTERS_GROUP: "qa"
+      - name: upload artifact to Firebase App Distribution
+        uses: wzieba/Firebase-Distribution-Github-Action@v1
+        with:
+          appId: ${{ secrets.app_id_${{ inputs.buildType }}}}
+          token: ${{ secrets.FIREBASE_TOKEN }}
+          groups: ${{ inputs.groupTester }}
+          file: app/build/outputs/apk/${{ inputs.buildType }}/app-${{ inputs.buildType }}.apk
       - name: Upload APK artifact
         uses: actions/upload-artifact@v2
         with:

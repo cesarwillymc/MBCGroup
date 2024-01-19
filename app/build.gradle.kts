@@ -8,6 +8,7 @@ plugins {
     id("com.apollographql.apollo3").version("3.7.3")
     id("com.google.firebase.appdistribution")
     kotlin("kapt")
+    id("com.google.gms.google-services")
 }
 
 private val localProperties = gradleLocalProperties(rootDir)

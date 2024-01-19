@@ -1,3 +1,5 @@
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -8,8 +10,7 @@ plugins {
     kotlin("kapt")
 }
 
-private val localProperties =
-    com.android.build.gradle.internal.cxx.configure.gradleLocalProperties(rootDir)
+private val localProperties = gradleLocalProperties(rootDir)
 
 fun getLocalProperty(key: String, defaultValue: String = ""): String =
     localProperties.getProperty(key, System.getenv(key) ?: defaultValue)

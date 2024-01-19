@@ -96,8 +96,9 @@ jobs:
           echo "CLIENT_SECRET=$CLIENT_SECRET" >> local.properties
       - name: Set RELEASE_NOTE
         id: set_release_note
-        run: echo "RELEASE_NOTE=$(if [ -z '${{ inputs.releaseNotes }}' ]; then cat release_notes.txt; else echo '${{ inputs.releaseNotes }}'; fi)" >> $GITHUB_ENV
-
+        run: |
+          RELEASE_NOTE=$(if [ -z "${{ inputs.releaseNotes }}" ]; then cat release_notes.txt; else echo "${{ inputs.releaseNotes }}"; fi)
+          echo "RELEASE_NOTE=$RELEASE_NOTE" >> $GITHUB_ENV
 #      - name: Execute validations
 #        run: ./gradlew executeValidations
       - name: Debug RELEASE_NOTE

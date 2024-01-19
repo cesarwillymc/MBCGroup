@@ -70,10 +70,10 @@ jobs:
           CLIENT_ID: ${{ secrets.CLIENT_ID }}
           CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
           APP_ID: |
-            if [[ ${{ inputs.buildType || 'debug' }} == "debug" ]]; then
-               ${{secrets.APP_ID_DEBUG}}
+            if [[ "${{ inputs.buildType || 'debug' }}" == "debug" ]]; then
+              secrets.APP_ID_DEBUG
             else
-               ${{secrets.APP_ID_RELEASE}}
+              secrets.APP_ID_RELEASE
             fi
         run: |
           echo "SHARED_PREFERENCES_NAME=$SHARED_PREFERENCES_NAME" >> local.properties

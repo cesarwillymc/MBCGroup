@@ -97,12 +97,15 @@ jobs:
       - name: Set RELEASE_NOTE
         id: set_release_note
         run: |
-          echo "RELEASE_NOTE={$(cat release_notes.txt)} >> $GITHUB_ENV
+          RELEASE_NOTE=$(cat release_notes.txt)
+          echo "RELEASE_NOTE_TEXT<<EOF" >> $GITHUB_ENV
+          echo $RELEASE_NOTE >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
 #      - name: Execute validations
 #        run: ./gradlew executeValidations
       - name: Debug RELEASE_NOTE
         run:  |
-          echo "RELEASE_NOTE: $RELEASE_NOTE"
+          echo "RELEASE_NOTE: $RELEASE_NOTE_TEXT"
       - name: Build App
         run: ./gradlew assemble${BUILD_TYPE^}
         env:
@@ -113,7 +116,7 @@ jobs:
           appId: $APP_ID
           serviceCredentialsFileContent: ${{ secrets.FIREBASE_TOKEN }}
           groups: ${{ inputs.groupTester || 'qa' }}
-          releaseNotesFile: $RELEASE_NOTE
+          releaseNotesFile: $RELEASE_NOTE_TEXT
           file: app/build/outputs/apk/${{ inputs.buildType || 'debug' }}/app-${{ inputs.buildType || 'debug' }}.apk
       - name: Upload APK artifact
         uses: actions/upload-artifact@v2

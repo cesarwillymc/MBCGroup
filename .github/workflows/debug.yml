@@ -115,6 +115,7 @@ jobs:
           groups: ${{ inputs.groupTester || 'qa' }}
           releaseNotes: $RELEASE_NOTE_TEXT
           file: app/build/outputs/apk/${{ inputs.buildType || 'debug' }}/app-${{ inputs.buildType || 'debug' }}.apk
+          debug: true
       - name: Upload APK artifact
         uses: actions/upload-artifact@v2
         with:

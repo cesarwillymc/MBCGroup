@@ -82,21 +82,21 @@ jobs:
             else
                ${{secrets.APP_ID_RELEASE}}
             fi
-          RELEASE_NOTE: |
-            if [[ ${{ inputs.releaseNotes }} == "" ]]; then
-               cat release_notes.txt
-            else
-               ${{inputs.releaseNotes}}
-            fi
+#          RELEASE_NOTE: |
+#            if [[ ${{ inputs.releaseNotes }} == "" ]]; then
+#               cat release_notes.txt
+#            else
+#               ${{inputs.releaseNotes}}
+#            fi
         run: |
           echo "SHARED_PREFERENCES_NAME=$SHARED_PREFERENCES_NAME" >> local.properties
           echo "BASE_URL=$BASE_URL" >> local.properties
           echo "BASE_URL_GQL=$BASE_URL_GQL" >> local.properties
           echo "CLIENT_ID=$CLIENT_ID" >> local.properties
           echo "CLIENT_SECRET=$CLIENT_SECRET" >> local.properties
-#      - name: Set RELEASE_NOTE
-#        id: set_release_note
-#        run: echo "RELEASE_NOTE=$(if [ -z '${{ inputs.releaseNotes }}' ]; then cat release_notes.txt; else echo '${{ inputs.releaseNotes }}'; fi)" >> $GITHUB_ENV
+      - name: Set RELEASE_NOTE
+        id: set_release_note
+        run: echo "RELEASE_NOTE=$(if [ -z '${{ inputs.releaseNotes }}' ]; then cat release_notes.txt; else echo '${{ inputs.releaseNotes }}'; fi)" >> $GITHUB_ENV
 
 #      - name: Execute validations
 #        run: ./gradlew executeValidations

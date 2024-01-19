@@ -113,7 +113,7 @@ jobs:
           appId: $APP_ID
           serviceCredentialsFileContent: ${{ secrets.FIREBASE_TOKEN }}
           groups: ${{ inputs.groupTester || 'qa' }}
-          releaseNotesFile: ${{ inputs.releaseNotes || }}
+          releaseNotesFile: $RELEASE_NOTE
           file: app/build/outputs/apk/${{ inputs.buildType || 'debug' }}/app-${{ inputs.buildType || 'debug' }}.apk
       - name: Upload APK artifact
         uses: actions/upload-artifact@v2

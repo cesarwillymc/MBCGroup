@@ -98,7 +98,13 @@ jobs:
         run:  |
           echo "RELEASE_NOTE: $RELEASE_NOTE_TEXT"
       - name: Build App
-        run: ./gradlew assemble${{ (inputs.buildType || 'debug')^ }}
+        run: |
+          if [[ ${{ inputs.buildType || 'debug' }} == "debug" ]]; then
+             ./gradlew assembleDebug
+          else
+             ./gradlew assembleRelease
+          fi
+
         env:
           DEBUG_KEY_PASSWORD: ${{ secrets.DEBUG_KEY_PASSWORD }}
       - name: upload artifact to Firebase App Distribution

@@ -9,9 +9,8 @@ on:
       - develop
 
 jobs:
-  build:
+  generation:
     runs-on: ubuntu-latest
-    needs: validations
     env:
       SHARED_PREFERENCES_NAME: ${{ secrets.SHARED_PREFERENCES_NAME }}
       BASE_URL: ${{ secrets.BASE_URL }}

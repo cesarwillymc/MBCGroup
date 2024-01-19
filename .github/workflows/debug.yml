@@ -30,19 +30,7 @@ on:
 jobs:
   generation:
     runs-on: ubuntu-latest
-    env:
-      VALUE_DATA: |
-        if [[ "${{ inputs.buildType }}" == "debug" ]]; then
-          echo "Debug"
-        else
-          echo "Release"
-        fi
-      APP_ID: |
-        if [[ "${{ inputs.buildType }}" == "debug" ]]; then
-          echo ${{secrets.APP_ID_DEBUG}}
-        else
-          echo ${{secrets.APP_ID_RELEASE}}
-        fi
+    environment: ${{ github.ref_name }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -70,6 +58,18 @@ jobs:
           BASE_URL_GQL: ${{ secrets.BASE_URL_GQL }}
           CLIENT_ID: ${{ secrets.CLIENT_ID }}
           CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
+          VALUE_DATA: |
+            if [[ "${{ inputs.buildType }}" == "debug" ]]; then
+               "Debug"
+            else
+               "Release"
+            fi
+          APP_ID: |
+            if [[ "${{ inputs.buildType }}" == "debug" ]]; then
+               ${{secrets.APP_ID_DEBUG}}
+            else
+               ${{secrets.APP_ID_RELEASE}}
+            fi
         run: |
           echo "SHARED_PREFERENCES_NAME=$SHARED_PREFERENCES_NAME" >> local.properties
           echo "BASE_URL=$BASE_URL" >> local.properties

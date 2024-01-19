@@ -69,12 +69,8 @@ jobs:
           BASE_URL_GQL: ${{ secrets.BASE_URL_GQL }}
           CLIENT_ID: ${{ secrets.CLIENT_ID }}
           CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
-          APP_ID: |
-            if [[ "${{ inputs.buildType || 'debug' }}" == "debug" ]]; then
-              ${{ secrets.APP_ID_DEBUG }}
-            else
-              ${{ secrets.APP_ID_RELEASE }}
-            fi
+          APP_ID: ${{ if(eq(inputs.buildType, 'debug'), secrets.APP_ID_DEBUG, secrets.APP_ID_RELEASE) }}
+
         run: |
           echo "SHARED_PREFERENCES_NAME=$SHARED_PREFERENCES_NAME" >> local.properties
           echo "BASE_URL=$BASE_URL" >> local.properties

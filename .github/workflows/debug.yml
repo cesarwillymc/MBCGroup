@@ -87,7 +87,7 @@ jobs:
           echo "RELEASE_NOTE_TEXT<<EOF" >> $GITHUB_ENV
           echo $RELEASE_NOTE >> $GITHUB_ENV
           echo "EOF" >> $GITHUB_ENV
-          echo "APP_ID_TEXT=$(if [ '${{ inputs.buildType }}' == 'debug' ]; then echo '${{ secrets.APP_ID_DEBUG }}'; else echo '${{ secrets.APP_ID_RELEASE }}'; fi)" >> $GITHUB_ENV
+          echo "APP_ID=$(if [ '${{ inputs.buildType }}' == 'release' ]; then echo '${{ secrets.APP_ID_RELEASE }}'; else echo '${{ secrets.APP_ID_DEBUG }}'; fi)" >> $GITHUB_ENV
 #      - name: Execute validations
 #        run: ./gradlew executeValidations
       - name: Debug RELEASE_NOTE

@@ -76,7 +76,6 @@ jobs:
           echo "BASE_URL_GQL=$BASE_URL_GQL" >> local.properties
           echo "CLIENT_ID=$CLIENT_ID" >> local.properties
           echo "CLIENT_SECRET=$CLIENT_SECRET" >> local.properties
-          echo "APP_ID=${{ if(eq(inputs.buildType, 'debug'), secrets.APP_ID_DEBUG, secrets.APP_ID_RELEASE) }}" >> $GITHUB_ENV
       - name: Set RELEASE_NOTE
         id: set_release_note
         run: |
@@ -88,6 +87,7 @@ jobs:
           echo "RELEASE_NOTE_TEXT<<EOF" >> $GITHUB_ENV
           echo $RELEASE_NOTE >> $GITHUB_ENV
           echo "EOF" >> $GITHUB_ENV
+          echo "APP_ID_TEXT=$(if [ '${{ inputs.buildType }}' == 'debug' ]; then echo '${{ secrets.APP_ID_DEBUG }}'; else echo '${{ secrets.APP_ID_RELEASE }}'; fi)" >> $GITHUB_ENV
 #      - name: Execute validations
 #        run: ./gradlew executeValidations
       - name: Debug RELEASE_NOTE

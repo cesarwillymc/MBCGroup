@@ -97,6 +97,8 @@ jobs:
       - name: Debug RELEASE_NOTE
         run:  |
           echo "RELEASE_NOTE: $RELEASE_NOTE_TEXT"
+          echo "APP_ID: $APP_ID"
+          echo "fileroute: app/build/outputs/apk/${{ inputs.buildType || 'debug' }}/app-${{ inputs.buildType || 'debug' }}.apk"
       - name: Build App
         run: |
           if [[ ${{ inputs.buildType || 'debug' }} == "debug" ]]; then

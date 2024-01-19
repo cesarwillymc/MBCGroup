@@ -1,6 +1,16 @@
 name: Generate Debug
 
 on:
+  workflow_dispatch:
+    buildType:
+      logLevel:
+        description: 'Build Type'
+        required: true
+        default: 'debug'
+        type: choice
+        options:
+          - debug
+          - release
   push:
     branches:
       - develop
@@ -11,6 +21,13 @@ on:
 jobs:
   generation:
     runs-on: ubuntu-latest
+    env:
+      VALUE_DATA: |
+        if [[ "${{ inputs.buildType }}" == "debug" ]]; then
+          echo "Debug"
+        else
+          echo "Release"
+        fi
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -40,20 +57,20 @@ jobs:
           CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
         run: |
           echo "SHARED_PREFERENCES_NAME=$SHARED_PREFERENCES_NAME" >> local.properties
-          echo "BASE_URL=BASE_URL" >> local.properties
-          echo "BASE_URL_GQL=BASE_URL_GQL" >> local.properties
-          echo "CLIENT_ID=CLIENT_ID" >> local.properties
-          echo "CLIENT_SECRET=CLIENT_SECRET" >> local.properties
+          echo "BASE_URL=$BASE_URL" >> local.properties
+          echo "BASE_URL_GQL=$BASE_URL_GQL" >> local.properties
+          echo "CLIENT_ID=$CLIENT_ID" >> local.properties
+          echo "CLIENT_SECRET=$CLIENT_SECRET" >> local.properties
 
       - name: Execute validations
         run: ./gradlew executeValidations
       - name: Build App
-        run: ./gradlew assembleDebug appDistributionUploadDebug
+        run: ./gradlew assemble${{VALUE_DATA}} appDistributionUpload${{ VALUE_DATA }}
         env:
           DEBUG_KEY_PASSWORD: ${{ secrets.DEBUG_KEY_PASSWORD }}
-          TESTERS_GROUP: ${{ secrets.TESTERS_GROUP }}
+          TESTERS_GROUP: "qa"
       - name: Upload APK artifact
         uses: actions/upload-artifact@v2
         with:
-          name: app-debug
-          path: app/build/outputs/apk/debug/app-debug.apk
+          name: app-${{ inputs.buildType }}
+          path: app/build/outputs/apk/${{ inputs.buildType }}/app-${{ inputs.buildType }}.apk

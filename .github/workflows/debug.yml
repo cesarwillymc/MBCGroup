@@ -1,6 +1,12 @@
 name: Generate Debug
 
 on:
+  push:
+    branches:
+      - develop
+  pull_request:
+    branches:
+      - develop
   workflow_dispatch:
     inputs:
       buildType:
@@ -25,12 +31,6 @@ on:
         required: true
         default: 'Update'
         type: string
-  push:
-    branches:
-      - develop
-  pull_request:
-    branches:
-      - develop
 
 jobs:
   generation:

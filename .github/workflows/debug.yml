@@ -98,7 +98,7 @@ jobs:
         id: set_release_note
         run: |
           RELEASE_NOTE=$(cat release_notes.txt)
-          echo {"RELEASE_NOTE=$RELEASE_NOTE"} >> $GITHUB_ENV
+          echo "RELEASE_NOTE={$RELEASE_NOTE"} >> $GITHUB_ENV
 #      - name: Execute validations
 #        run: ./gradlew executeValidations
       - name: Debug RELEASE_NOTE

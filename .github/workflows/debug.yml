@@ -41,7 +41,7 @@ jobs:
         job-type: [ config ]
     steps:
       - name: Execute validations
-        run: ./gradlew executeValidations
+        run: ${{ github.workspace }}/gradlew executeValidations
   build:
     runs-on: ubuntu-latest
     needs: validations

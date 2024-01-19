@@ -69,7 +69,6 @@ jobs:
           BASE_URL_GQL: ${{ secrets.BASE_URL_GQL }}
           CLIENT_ID: ${{ secrets.CLIENT_ID }}
           CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
-
         run: |
           echo "SHARED_PREFERENCES_NAME=$SHARED_PREFERENCES_NAME" >> local.properties
           echo "BASE_URL=$BASE_URL" >> local.properties
@@ -95,26 +94,19 @@ jobs:
           else
            echo "APP_ID=${{ secrets.APP_ID_RELEASE }}" >> $GITHUB_ENV
           fi
-#      - name: Execute validations
-#        run: ./gradlew executeValidations
-      - name: Debug RELEASE_NOTE
-        run:  |
-          echo "RELEASE_NOTE: $RELEASE_NOTE_TEXT"
-          echo "APP_ID: $APP_ID"
-          echo "secretRelease: ${{secrets.APP_ID_RELEASE}}"
-          echo "secretDebug: ${{secrets.APP_ID_DEBUG}}"
-          echo "fileroute: app/build/outputs/apk/${{ inputs.buildType || 'debug' }}/app-${{ inputs.buildType || 'debug' }}.apk"
-      - name: Build App
-        run: |
-          if [[ ${{ inputs.buildType || 'debug' }} == "debug" ]]; then
-             ./gradlew assembleDebug
-          else
-             ./gradlew assembleRelease
-          fi
-
+      - name: Execute validations
+        run: ./gradlew executeValidations
+      - name: Build App Release
+        if: ${{ inputs.buildType || 'debug' }} != "debug"
+        run: ./gradlew assembleRelease
         env:
           DEBUG_KEY_PASSWORD: ${{ secrets.DEBUG_KEY_PASSWORD }}
-      - name: upload artifact to Firebase App Distribution
+      - name: Build App Debug
+        if:  ${{ inputs.buildType || 'debug' }} == "debug"
+        run: ./gradlew assembleDebug
+        env:
+          DEBUG_KEY_PASSWORD: ${{ secrets.DEBUG_KEY_PASSWORD }}
+      - name: Upload  Firebase App Distribution
         uses: wzieba/Firebase-Distribution-Github-Action@v1
         with:
           appId: ${{ env.APP_ID }}

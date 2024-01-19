@@ -37,6 +37,12 @@ jobs:
         else
           echo "Release"
         fi
+      APP_ID: |
+        if [[ "${{ inputs.buildType }}" == "debug" ]]; then
+          echo ${{secrets.APP_ID_DEBUG}}
+        else
+          echo ${{secrets.APP_ID_RELEASE}}
+        fi
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -80,7 +86,7 @@ jobs:
       - name: upload artifact to Firebase App Distribution
         uses: wzieba/Firebase-Distribution-Github-Action@v1
         with:
-          appId: ${{ secrets.app_id_${{ inputs.buildType }}}}
+          appId: $APP_ID
           token: ${{ secrets.FIREBASE_TOKEN }}
           groups: ${{ inputs.groupTester }}
           file: app/build/outputs/apk/${{ inputs.buildType }}/app-${{ inputs.buildType }}.apk

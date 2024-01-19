@@ -87,6 +87,14 @@ jobs:
           echo "RELEASE_NOTE_TEXT<<EOF" >> $GITHUB_ENV
           echo $RELEASE_NOTE >> $GITHUB_ENV
           echo "EOF" >> $GITHUB_ENV
+      - name: Set App ID
+        id: set_app_id
+        run: |
+          if [[ "${{ inputs.buildType || 'debug' }}" == "debug" ]]; then
+            echo "APP_ID=${{ secrets.APP_ID_DEBUG }}" >> $GITHUB_ENV
+          else
+           echo "APP_ID=${{ secrets.APP_ID_RELEASE }}" >> $GITHUB_ENV
+          fi
 #      - name: Execute validations
 #        run: ./gradlew executeValidations
       - name: Debug RELEASE_NOTE
@@ -109,15 +117,10 @@ jobs:
       - name: upload artifact to Firebase App Distribution
         uses: wzieba/Firebase-Distribution-Github-Action@v1
         with:
-          appId: |
-            if [[ ${{ inputs.buildType || 'debug' }} == 'debug' ]]; then
-              ${{ secrets.APP_ID_DEBUG }}
-            else
-              ${{ secrets.APP_ID_RELEASE }}
-            fi
+          appId: ${{ env.APP_ID }}
           serviceCredentialsFileContent: ${{ secrets.FIREBASE_TOKEN }}
           groups: ${{ inputs.groupTester || 'qa' }}
-          releaseNotes: $RELEASE_NOTE_TEXT
+          releaseNotes: ${{ inputs.releaseNotes || (cat release_notes.txt) }}
           file: app/build/outputs/apk/${{ inputs.buildType || 'debug' }}/app-${{ inputs.buildType || 'debug' }}.apk
           debug: true
       - name: Upload APK artifact

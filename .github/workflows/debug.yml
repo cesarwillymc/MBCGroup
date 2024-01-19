@@ -11,15 +11,6 @@ on:
 jobs:
   generation:
     runs-on: ubuntu-latest
-    env:
-      SHARED_PREFERENCES_NAME: ${{ secrets.SHARED_PREFERENCES_NAME }}
-      BASE_URL: ${{ secrets.BASE_URL }}
-      BASE_URL_GQL: ${{ secrets.BASE_URL_GQL }}
-      CLIENT_ID: ${{ secrets.CLIENT_ID }}
-      CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
-      DEBUG_KEY_PASSWORD: ${{ secrets.DEBUG_KEY_PASSWORD }}
-      TESTERS_GROUP: ${{ secrets.TESTERS_GROUP }}
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -43,9 +34,24 @@ jobs:
         run: chmod +x gradlew
       - name: Execute validations
         run: ./gradlew executeValidations
+        env:
+          SHARED_PREFERENCES_NAME: ${{ secrets.SHARED_PREFERENCES_NAME }}
+          BASE_URL: ${{ secrets.BASE_URL }}
+          BASE_URL_GQL: ${{ secrets.BASE_URL_GQL }}
+          CLIENT_ID: ${{ secrets.CLIENT_ID }}
+          CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
+          DEBUG_KEY_PASSWORD: ${{ secrets.DEBUG_KEY_PASSWORD }}
+          TESTERS_GROUP: ${{ secrets.TESTERS_GROUP }}
       - name: Build App
         run: ./gradlew assembleDebug appDistributionUploadDebug
-
+        env:
+          SHARED_PREFERENCES_NAME: ${{ secrets.SHARED_PREFERENCES_NAME }}
+          BASE_URL: ${{ secrets.BASE_URL }}
+          BASE_URL_GQL: ${{ secrets.BASE_URL_GQL }}
+          CLIENT_ID: ${{ secrets.CLIENT_ID }}
+          CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
+          DEBUG_KEY_PASSWORD: ${{ secrets.DEBUG_KEY_PASSWORD }}
+          TESTERS_GROUP: ${{ secrets.TESTERS_GROUP }}
       - name: Upload APK artifact
         uses: actions/upload-artifact@v2
         with:

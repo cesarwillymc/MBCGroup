@@ -83,7 +83,7 @@ jobs:
                ${{secrets.APP_ID_RELEASE}}
             fi
           RELEASE_NOTE: |
-            if [[ "${{ inputs.releaseNotes }}" == "" ]]; then
+            if [[ ${{ inputs.releaseNotes }} == "" ]]; then
                cat release_notes.txt
             else
                ${{inputs.releaseNotes}}
@@ -94,9 +94,15 @@ jobs:
           echo "BASE_URL_GQL=$BASE_URL_GQL" >> local.properties
           echo "CLIENT_ID=$CLIENT_ID" >> local.properties
           echo "CLIENT_SECRET=$CLIENT_SECRET" >> local.properties
+#      - name: Set RELEASE_NOTE
+#        id: set_release_note
+#        run: echo "RELEASE_NOTE=$(if [ -z '${{ inputs.releaseNotes }}' ]; then cat release_notes.txt; else echo '${{ inputs.releaseNotes }}'; fi)" >> $GITHUB_ENV
 
 #      - name: Execute validations
 #        run: ./gradlew executeValidations
+      - name: Debug RELEASE_NOTE
+        run:  |
+          echo "RELEASE_NOTE: $RELEASE_NOTE"
       - name: Build App
         run: ./gradlew assemble${BUILD_TYPE^}
         env:
@@ -107,7 +113,7 @@ jobs:
           appId: $APP_ID
           serviceCredentialsFileContent: ${{ secrets.FIREBASE_TOKEN }}
           groups: ${{ inputs.groupTester || 'qa' }}
-          releaseNotesFile: $RELEASE_NOTE
+          releaseNotesFile: ${{ inputs.releaseNotes || }}
           file: app/build/outputs/apk/${{ inputs.buildType || 'debug' }}/app-${{ inputs.buildType || 'debug' }}.apk
       - name: Upload APK artifact
         uses: actions/upload-artifact@v2

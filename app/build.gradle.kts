@@ -1,4 +1,6 @@
 import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+import java.io.FileInputStream
+import java.util.Properties
 
 plugins {
     id("com.android.application")
@@ -10,7 +12,13 @@ plugins {
     kotlin("kapt")
 }
 
-private val localProperties = gradleLocalProperties(rootDir)
+private val localProperties =  Properties().apply {
+    File(rootProject.rootDir, "local.properties").let {
+        if(it.exists()){
+            load(FileInputStream(it))
+        }
+    }
+}
 
 fun getLocalProperty(key: String, defaultValue: String = ""): String =
     localProperties.getProperty(key, System.getenv(key) ?: defaultValue)

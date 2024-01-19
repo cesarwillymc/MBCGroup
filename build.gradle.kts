@@ -8,6 +8,8 @@ plugins {
     id("com.github.ben-manes.versions") version "0.39.0"
     id("com.google.dagger.hilt.android") version "2.48" apply false
     id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin") version "2.0.1" apply false
+    id("com.google.firebase.appdistribution") version "4.0.0" apply false
+
 }
 allprojects {
     apply(plugin = "org.jmailen.kotlinter")

@@ -4,6 +4,7 @@ plugins {
     id("com.google.dagger.hilt.android")
     id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
     id("com.apollographql.apollo3").version("3.7.3")
+    id("com.google.firebase.appdistribution")
     kotlin("kapt")
 }
 
@@ -58,6 +59,7 @@ android {
         }
         debug {
             signingConfig = signingConfigs.getByName("debug")
+            applicationIdSuffix = ".debug"
             isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -85,7 +87,10 @@ android {
         }
     }
 }
-
+configure<com.google.firebase.appdistribution.gradle.AppDistributionExtension> {
+    releaseNotesFile = "${projectDir}/../release_notes.txt"
+    groups = getLocalProperty("TESTERS_GROUP", "")
+}
 dependencies {
 
     // Dagger

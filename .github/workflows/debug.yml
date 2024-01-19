@@ -65,7 +65,7 @@ jobs:
       - name: Execute validations
         run: ./gradlew executeValidations
       - name: Build App
-        run: ./gradlew assemble${{VALUE_DATA}} appDistributionUpload${{ VALUE_DATA }}
+        run: ./gradlew assemble$VALUE_DATA appDistributionUpload$VALUE_DATA
         env:
           DEBUG_KEY_PASSWORD: ${{ secrets.DEBUG_KEY_PASSWORD }}
           TESTERS_GROUP: "qa"

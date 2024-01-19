@@ -120,7 +120,7 @@ jobs:
           appId: ${{ env.APP_ID }}
           serviceCredentialsFileContent: ${{ secrets.FIREBASE_TOKEN }}
           groups: ${{ inputs.groupTester || 'qa' }}
-          releaseNotes: ${{ inputs.releaseNotes || (cat release_notes.txt; exit 0) }}
+          releaseNotes: ${{ env.RELEASE_NOTE_TEXT }}
           file: app/build/outputs/apk/${{ inputs.buildType || 'debug' }}/app-${{ inputs.buildType || 'debug' }}.apk
           debug: true
       - name: Upload APK artifact

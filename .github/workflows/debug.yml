@@ -69,14 +69,26 @@ jobs:
           BASE_URL_GQL: ${{ secrets.BASE_URL_GQL }}
           CLIENT_ID: ${{ secrets.CLIENT_ID }}
           CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
-          VALUE_DATA: |
-            if [[ "${{ inputs.buildType }}" == "debug" ]]; then
+          BUILD_TYPE: |
+            if [[ "${{ inputs.buildType }}" == "release" ]]; then
+               "release"
+            else
+               "debug"
+            fi
+          BUILD_TYPE_VALUE: |
+            if [[ "$BUILD_TYPE" == "debug" ]]; then
                "Debug"
             else
                "Release"
             fi
+          FIREBASE_TESTERS: |
+            if [[ "${{ inputs.groupTester }}" == "" ]]; then
+               "qa"
+            else
+               ${{inputs.groupTester}}
+            fi
           APP_ID: |
-            if [[ "${{ inputs.buildType }}" == "debug" ]]; then
+            if [[ "$BUILD_TYPE" == "debug" ]]; then
                ${{secrets.APP_ID_DEBUG}}
             else
                ${{secrets.APP_ID_RELEASE}}
@@ -97,7 +109,7 @@ jobs:
       - name: Execute validations
         run: ./gradlew executeValidations
       - name: Build App
-        run: ./gradlew assemble$VALUE_DATA
+        run: ./gradlew assemble$BUILD_TYPE_VALUE
         env:
           DEBUG_KEY_PASSWORD: ${{ secrets.DEBUG_KEY_PASSWORD }}
       - name: upload artifact to Firebase App Distribution
@@ -105,11 +117,11 @@ jobs:
         with:
           appId: $APP_ID
           serviceCredentialsFileContent: ${{ secrets.FIREBASE_TOKEN }}
-          groups: ${{ inputs.groupTester }}
+          groups: $FIREBASE_TESTERS
           releaseNotesFile: $RELEASE_NOTE
-          file: app/build/outputs/apk/${{ inputs.buildType }}/app-${{ inputs.buildType }}.apk
+          file: app/build/outputs/apk/$BUILD_TYPE/app-$BUILD_TYPE.apk
       - name: Upload APK artifact
         uses: actions/upload-artifact@v2
         with:
-          name: app-${{ inputs.buildType }}
-          path: app/build/outputs/apk/${{ inputs.buildType }}/app-${{ inputs.buildType }}.apk
+          name: app-BUILD_TYPE
+          path: app/build/outputs/apk/$BUILD_TYPE/app-$BUILD_TYPE.apk

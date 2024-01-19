@@ -1,0 +1,122 @@
+name: Generate Debug
+
+on:
+  push:
+    branches:
+      - develop
+  pull_request:
+    branches:
+      - develop
+  workflow_dispatch:
+    inputs:
+      buildType:
+        description: 'Build Type'
+        required: true
+        default: 'debug'
+        type: choice
+        options:
+          - debug
+          - release
+      groupTester:
+        description: 'Testers'
+        required: true
+        default: 'qa'
+        type: choice
+        options:
+          - all
+          - qa
+          - production
+      releaseNotes:
+        description: 'Release notes'
+        required: true
+        default: 'Update'
+        type: string
+
+jobs:
+  generation:
+    runs-on: ubuntu-latest
+    environment: ${{ github.ref_name }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+          cache: 'gradle'
+
+      - name: Set up Gradle cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties', '**/buildSrc/**/*.kt') }}
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+      - name: Create Google Services File
+        run: cat /home/runner/work/MBCGroup/MBCGroup/app/google-services.json | base64
+      - name: Add data Google Services File
+        env:
+          DATA: ${{ secrets.GOOGLE_SERVICES_JSON }}
+        run: echo $DATA > /home/runner/work/MBCGroup/MBCGroup/app/google-services.json
+      - name: Configuration Local.properties
+        env:
+          SHARED_PREFERENCES_NAME: ${{ secrets.SHARED_PREFERENCES_NAME }}
+          BASE_URL: ${{ secrets.BASE_URL }}
+          BASE_URL_GQL: ${{ secrets.BASE_URL_GQL }}
+          CLIENT_ID: ${{ secrets.CLIENT_ID }}
+          CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
+        run: |
+          echo "SHARED_PREFERENCES_NAME=$SHARED_PREFERENCES_NAME" >> local.properties
+          echo "BASE_URL=$BASE_URL" >> local.properties
+          echo "BASE_URL_GQL=$BASE_URL_GQL" >> local.properties
+          echo "CLIENT_ID=$CLIENT_ID" >> local.properties
+          echo "CLIENT_SECRET=$CLIENT_SECRET" >> local.properties
+      - name: Set RELEASE_NOTE
+        id: set_release_note
+        run: |
+          if [ -z "${{ inputs.releaseNotes }}" ]; then
+            RELEASE_NOTE=$(cat release_notes.txt)
+          else
+            RELEASE_NOTE="${{ inputs.releaseNotes }}"
+          fi
+          echo "RELEASE_NOTE_TEXT<<EOF" >> $GITHUB_ENV
+          echo $RELEASE_NOTE >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+      - name: Set App ID
+        id: set_app_id
+        run: |
+          if [[ "${{ inputs.buildType || 'debug' }}" == "debug" ]]; then
+            echo "APP_ID=${{ secrets.APP_ID_DEBUG }}" >> $GITHUB_ENV
+          else
+           echo "APP_ID=${{ secrets.APP_ID_RELEASE }}" >> $GITHUB_ENV
+          fi
+      - name: Execute validations
+        run: ./gradlew executeValidations
+      - name: Build App Release
+        if: ${{ inputs.buildType || 'debug' }} != "debug"
+        run: ./gradlew assembleRelease
+        env:
+          DEBUG_KEY_PASSWORD: ${{ secrets.DEBUG_KEY_PASSWORD }}
+      - name: Build App Debug
+        if:  ${{ inputs.buildType || 'debug' }} == "debug"
+        run: ./gradlew assembleDebug
+        env:
+          DEBUG_KEY_PASSWORD: ${{ secrets.DEBUG_KEY_PASSWORD }}
+      - name: Upload  Firebase App Distribution
+        uses: wzieba/Firebase-Distribution-Github-Action@v1
+        with:
+          appId: ${{ env.APP_ID }}
+          serviceCredentialsFileContent: ${{ secrets.FIREBASE_TOKEN }}
+          groups: ${{ inputs.groupTester || 'qa' }}
+          releaseNotes: ${{ env.RELEASE_NOTE_TEXT }}
+          file: app/build/outputs/apk/${{ inputs.buildType || 'debug' }}/app-${{ inputs.buildType || 'debug' }}.apk
+          debug: true
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: app-${{ inputs.buildType || 'debug' }}
+          path: app/build/outputs/apk/${{ inputs.buildType || 'debug' }}/app-${{ inputs.buildType || 'debug' }}.apk

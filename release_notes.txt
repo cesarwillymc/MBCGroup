@@ -1,0 +1,3 @@
+SPRINT 1:
+- SM-1324 Android - Ocultar pestañas sin información en PDP
+- SM-1358 Android - Habilitar Mi Cuenta en Ecuador

@@ -1,14 +1,17 @@
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("com.google.dagger.hilt.android")
     id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
     id("com.apollographql.apollo3").version("3.7.3")
+    id("com.google.firebase.appdistribution")
     kotlin("kapt")
+    id("com.google.gms.google-services")
 }
 
-private val localProperties =
-    com.android.build.gradle.internal.cxx.configure.gradleLocalProperties(rootDir)
+private val localProperties = gradleLocalProperties(rootDir)
 
 fun getLocalProperty(key: String, defaultValue: String = ""): String =
     localProperties.getProperty(key, System.getenv(key) ?: defaultValue)
@@ -58,6 +61,7 @@ android {
         }
         debug {
             signingConfig = signingConfigs.getByName("debug")
+            applicationIdSuffix = ".debug"
             isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -84,6 +88,10 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+}
+configure<com.google.firebase.appdistribution.gradle.AppDistributionExtension> {
+    releaseNotesFile = "${projectDir}/../release_notes.txt"
+    groups = getLocalProperty("TESTERS_GROUP", "")
 }
 
 dependencies {

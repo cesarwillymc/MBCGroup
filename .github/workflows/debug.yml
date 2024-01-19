@@ -69,21 +69,15 @@ jobs:
           BASE_URL_GQL: ${{ secrets.BASE_URL_GQL }}
           CLIENT_ID: ${{ secrets.CLIENT_ID }}
           CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
-          BUILD_TYPE: |
-            if [[ "${{ inputs.buildType }}" == "release" ]]; then
-               "release"
-            else
-               "debug"
-            fi
           BUILD_TYPE_VALUE: |
-            if [[ ${BUILD_TYPE} == "debug" ]]; then
+            if [[ ${{ inputs.buildType || 'debug' }} == "debug" ]]; then
                "Debug"
             else
                "Release"
             fi
 
           APP_ID: |
-            if [[ ${BUILD_TYPE} == "debug" ]]; then
+            if [[ ${{ inputs.buildType || 'debug' }} == "debug" ]]; then
                ${{secrets.APP_ID_DEBUG}}
             else
                ${{secrets.APP_ID_RELEASE}}
@@ -114,9 +108,9 @@ jobs:
           serviceCredentialsFileContent: ${{ secrets.FIREBASE_TOKEN }}
           groups: ${{ inputs.groupTester || 'qa' }}
           releaseNotesFile: $RELEASE_NOTE
-          file: app/build/outputs/apk/${{BUILD_TYPE}}/app-${{BUILD_TYPE}}.apk
+          file: app/build/outputs/apk/${{ inputs.buildType || 'debug' }}/app-${{ inputs.buildType || 'debug' }}.apk
       - name: Upload APK artifact
         uses: actions/upload-artifact@v2
         with:
-          name: app-$BUILD_TYPE
-          path: app/build/outputs/apk/${{BUILD_TYPE}}/app-${BUILD_TYPE}.apk
+          name: app-${{ inputs.buildType || 'debug' }}
+          path: app/build/outputs/apk/${{ inputs.buildType || 'debug' }}/app-${{ inputs.buildType || 'debug' }}.apk

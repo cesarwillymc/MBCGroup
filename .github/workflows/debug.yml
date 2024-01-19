@@ -97,7 +97,7 @@ jobs:
       - name: Set RELEASE_NOTE
         id: set_release_note
         run: |
-          RELEASE_NOTE=$(if [[ "${{ inputs.releaseNotes }}" =="" ]]; then cat release_notes.txt; else "${{ inputs.releaseNotes }}"; fi)
+          RELEASE_NOTE=$(cat release_notes.txt)
           echo "RELEASE_NOTE=$RELEASE_NOTE" >> $GITHUB_ENV
 #      - name: Execute validations
 #        run: ./gradlew executeValidations

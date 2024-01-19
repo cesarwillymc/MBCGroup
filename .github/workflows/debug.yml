@@ -114,9 +114,9 @@ jobs:
           serviceCredentialsFileContent: ${{ secrets.FIREBASE_TOKEN }}
           groups: ${{ inputs.groupTester || 'qa' }}
           releaseNotesFile: $RELEASE_NOTE
-          file: app/build/outputs/apk/${BUILD_TYPE}/app-${BUILD_TYPE}.apk
+          file: app/build/outputs/apk/$BUILD_TYPE/app-$BUILD_TYPE.apk
       - name: Upload APK artifact
         uses: actions/upload-artifact@v2
         with:
-          name: app-${BUILD_TYPE}
+          name: app-$BUILD_TYPE
           path: app/build/outputs/apk/${BUILD_TYPE}/app-${BUILD_TYPE}.apk

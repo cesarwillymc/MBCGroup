@@ -69,13 +69,6 @@ jobs:
           BASE_URL_GQL: ${{ secrets.BASE_URL_GQL }}
           CLIENT_ID: ${{ secrets.CLIENT_ID }}
           CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
-          BUILD_TYPE_VALUE: |
-            if [[ ${{ inputs.buildType || 'debug' }} == "debug" ]]; then
-               "Debug"
-            else
-               "Release"
-            fi
-
           APP_ID: |
             if [[ ${{ inputs.buildType || 'debug' }} == "debug" ]]; then
                ${{secrets.APP_ID_DEBUG}}
@@ -105,7 +98,7 @@ jobs:
         run:  |
           echo "RELEASE_NOTE: $RELEASE_NOTE_TEXT"
       - name: Build App
-        run: ./gradlew assemble${BUILD_TYPE_VALUE}
+        run: ./gradlew assemble${{ (inputs.buildType || 'debug')^ }}
         env:
           DEBUG_KEY_PASSWORD: ${{ secrets.DEBUG_KEY_PASSWORD }}
       - name: upload artifact to Firebase App Distribution
